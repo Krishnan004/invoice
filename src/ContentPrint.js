@@ -56,31 +56,34 @@ const ContentPrint = ({ date, image, from, to, items, qno, setQno }) => {
 
     return (
         <main className="p-6">
-            <div className="w-full flex gap-4 m-2 mx-4">
-                <Link to="/"><FaRegEdit className="text-2xl sm:text-4xl" /></Link>
-                <IoShareSocialOutline className="text-2xl sm:text-4xl" onClick={() => setShare(!share)} />
-                <MdOutlineFileDownload className="text-2xl sm:text-4xl" onClick={handleDownload} />
-                <TfiPrinter className="text-2xl sm:text-4xl" onClick={handlePrint} />
+            <div className=" grid grid-cols-4 gap-6  float-right mx-12">
+                <Link to="/"> <FaRegEdit className="text-4xl" /></Link>
+                <IoShareSocialOutline className="text-4xl" onClick={() => setShare(!share)} />
+
+                <MdOutlineFileDownload className="text-4xl" onClick={handlePrint} />
+                <TfiPrinter className="text-4xl" onClick={handlePrint} />
+                {share && (
+                    <>
+                        <WhatsappShareButton
+                            url={'https://github.com/next-share'}
+                            title={'next-share is a social share buttons for your next React apps.'}
+                            separator=":: "
+                        >
+                            <WhatsappIcon size={32} round />
+                        </WhatsappShareButton>
+                        <EmailShareButton
+                            url={'https://github.com/next-share'}
+                            subject={'Next Share'}
+                            body="body"
+                        >
+                            <EmailIcon size={32} round />
+                        </EmailShareButton>
+                    </>
+                )}
+
             </div>
-            {share && (
-                <div className="flex space-x-2 m-2">
-                    <WhatsappShareButton
-                        url={'https://github.com/next-share'}
-                        title={'next-share is a social share buttons for your next React apps.'}
-                        separator=":: "
-                    >
-                        <WhatsappIcon size={32} round />
-                    </WhatsappShareButton>
-                    <EmailShareButton
-                        url={'https://github.com/next-share'}
-                        subject={'Next Share'}
-                        body="body"
-                    >
-                        <EmailIcon size={32} round />
-                    </EmailShareButton>
-                </div>
-            )}
-            <div className="m-4 p-4 border border-gray-500 rounded-xl text-gray-500 ">
+             
+            <div className="m-12 p-6 border border-gray-500 rounded-xl text-gray-500 ">
                 <h3 className="p-4 text-gray-600 text-xl text-center sm:text-2xl font-bold">Quotation</h3>
                 <div className="mx-4 my-4">
                     <div className="flex flex-col sm:flex-row justify-between">
@@ -92,7 +95,7 @@ const ContentPrint = ({ date, image, from, to, items, qno, setQno }) => {
                             <label htmlFor="quotation_date" >{date}</label>
                         </div>
                         <div className="flex justify-end mt-4 sm:mt-0">
-                            <img src={image} alt="Uploaded" className="w-40 h-20 sm:w-80 sm:h-24 object-contain" />
+                            <img src={image} alt="Uploaded" className="w-40 h-20 sm:w-80 sm:h-40 object-contain" />
                         </div>
                     </div>
                 </div>
@@ -160,6 +163,7 @@ const ContentPrint = ({ date, image, from, to, items, qno, setQno }) => {
                     ))}
                 </div>
                 <SumTotal items={items} />
+                
             </div>
         </main>
     );

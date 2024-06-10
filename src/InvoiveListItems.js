@@ -29,7 +29,7 @@ const InvoiveListItems = ({items,setItems}) => {
           <label className="invoice" name="itemname" >{item.item}</label>
           <label className="invoice" name="gst">{item.gst}</label>
           <label className="invoice" name="quantity">{item.quantity}</label>
-          <label className="invoice" name="rate"><LiaRupeeSignSolid className="inline"/>{item.rate}</label>
+          <label className="invoice" name="rate"><LiaRupeeSignSolid className="inline"/>{(item.rate)}</label>
           <label className="invoice" name="amount"><LiaRupeeSignSolid className="inline"/>{(item.quantity * item.rate).toFixed(3)}</label>
           <label className="invoice" name="cgst" >{((item.quantity * item.rate)*item.gst/100/2).toFixed(3)}</label>
           <label className="invoice" name="sgst" >{((item.quantity * item.rate)*item.gst/100/2).toFixed(3)}</label>

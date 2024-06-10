@@ -32,50 +32,52 @@ const InvoiceSumTotal = ({ items }) => {
         const gst = items.length > 0 ? items[0].gst : 0;
         const cgst = totalSum * gst / 100 / 2;
         setTax(cgst);
-    }, [tax]);
+    }, [tax,items]);
 
     useEffect(() => {
         const gst = items.length > 0 ? items[0].gst : 0;
         const cgst = sumTotal * gst / 100 / 2;
         setTax(cgst);
-    }, [total,sumTotal]);
+    }, [total,sumTotal,items]);
 
     return (
-        <div className="m-4 text-right">
-            <div className="text-gray-500 text-lg">
-                <label className="block mx-14">
-                    Amount: <span className="ml-8"><LiaRupeeSignSolid className="inline"/>{sumTotal.toFixed(2)}</span>
+        <div className="m-8  text-right">
+            <div className="m-2 mx-10 grid grid-cols-1 gap-2 text-gray-500 text-lg ">
+                <label >
+                    Amount: <span ><LiaRupeeSignSolid className="inline"/>{sumTotal.toFixed(2)}</span>
                 </label>
-                <label className="block mx-14">
-                    CGST: <span className="ml-8"><LiaRupeeSignSolid className="inline"/>{tax.toFixed(2)}</span>
+                <label >
+                    CGST: <span ><LiaRupeeSignSolid className="inline"/>{tax.toFixed(2)}</span>
                 </label>
-                <label className="block mx-14">
-                    SGST: <span className="ml-8"><LiaRupeeSignSolid className="inline"/>{tax.toFixed(2)}</span>
+                <label >
+                    SGST: <span ><LiaRupeeSignSolid className="inline"/>{tax.toFixed(2)}</span>
                 </label>
                 {disCount > 0 && (
-                    <label className="block mx-14">
-                        Discount: <span className="ml-8"><LiaRupeeSignSolid className="inline"/>{disCount.toFixed(2)}</span>
+                    <label >
+                        Discount: <span ><LiaRupeeSignSolid className="inline"/>{disCount.toFixed(2)}</span>
                     </label>
                 )}
                 {!disVisibility ? (
-                    <button className="mx-28" onClick={handleDiscountVisibility}>+ Give discount on total</button>
+                    <div>
+                    <button className="" onClick={handleDiscountVisibility}>+ Give discount on total</button>
+                    </div>
                 ) : (
-                    <>
+                    <div>
                         <label htmlFor="reduction">Reduction: </label>
                         <input
                             type="text"
-                            className="w-24"
+                            className="w-24 inline"
                             name="reduction%"
                             id="reduction"
                             placeholder="%"
                             onBlur={(e) => applyDiscount(e.target.value)}
                         />
                         <RxCross2 className="inline" onClick={handleDiscountVisibility} />
-                    </>
+                    </div>
                 )}
                 <label className="block mx-28" onClick={handleRoundOff}>Round Off</label>
             </div>
-            <div className="border-y border-gray-500 right-0">
+            <div className="border-y border-gray-500 inline p-4">
                 <label className="text-2xl text-gray-500">
                     Total Amount <span className="mx-8 text-gray-600 font-bold"><LiaRupeeSignSolid className="inline"/>{total}</span>
                 </label>

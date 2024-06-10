@@ -65,7 +65,7 @@ const InvoicePrint = ({ date, image, from, to, items, qno,setQno }) => {
 
     return (
         <main className="p-6 ">
-            <div className="w-28 grid grid-cols-4 gap-16 m-2 mx-12">
+            <div className=" grid grid-cols-4 gap-6  float-right mx-12">
                 <Link to="/invoice"> <FaRegEdit className="text-4xl" /></Link>
                 <IoShareSocialOutline className="text-4xl" onClick={() => setShare(!share)} />
 
@@ -91,7 +91,7 @@ const InvoicePrint = ({ date, image, from, to, items, qno,setQno }) => {
                 )}
 
             </div>
-            <div className="m-12 p-6 border-2 rounded-xl text-gray-500  ">
+            <div className="m-12 p-6  border border-gray-700 rounded-xl">
                 <h3 className="p-8 text-gray-600 text-2xl  font-bold ">Invoice</h3>
                 <div className="mx-8 my-8">
                     <label htmlFor="quotation_no" className=" text-gray-600 inline block text-left mt-4">Quotation No.</label>
@@ -100,12 +100,12 @@ const InvoicePrint = ({ date, image, from, to, items, qno,setQno }) => {
                     <label htmlFor="quotation_date" className="text-gray-600 inline block text-left mt-4">Quotation Date: </label>
                     <label htmlFor="quotation_date" className="">{date}</label>
                     <image className="flex float-right -mt-28 mr-8">
-                        <img src={image} alt="Uploaded" className=" w-80 h-24 object-contain" />
+                        <img src={image} alt="Uploaded" className=" w-80 h-40 object-contain" />
                     </image>
                 </div>
 
                 <quotation className="mx-auto grid grid-cols-2 gap-4 w-max-92  p-8">
-                    <from className=" p-8 border-2 rounded-xl">
+                    <from className=" p-8 border border-gray-500 rounded-xl">
                         <h2 className="p-2 text-gray-600 text-2xl font-bold">Billed From</h2>
 
                         <h3 className="p-2 my-2 text-gray-600 text-2xl font-bold">{from.name}</h3>
@@ -124,7 +124,7 @@ const InvoicePrint = ({ date, image, from, to, items, qno,setQno }) => {
                         <label className="p-2 text-gray-600 text-2xl font-bold">Phone No:</label>
                         <label>{from.mobile}</label><br />
                     </from>
-                    <to className=" p-8 border-2 rounded-xl">
+                    <to className=" p-8 border border-gray-500 rounded-xl">
                         <h2 className="p-2 text-gray-600 text-2xl font-bold">Billed To</h2>
 
                         <h3 className="p-2 my-2 text-gray-600 text-2xl font-bold">{to.name}</h3>
@@ -143,7 +143,7 @@ const InvoicePrint = ({ date, image, from, to, items, qno,setQno }) => {
                         <label>{to.mobile}</label><br />
                     </to>
                 </quotation>
-                <div className=" mx-8">
+                <div className=" mx-8 ">
                     <header className="pl-2 bg-custom-blue grid grid-cols-8 list-none text-white rounded-t-2xl text-center text-xl py-6 mt-0">
                         <li>Item</li>
                         <li>GST</li>
@@ -154,10 +154,10 @@ const InvoicePrint = ({ date, image, from, to, items, qno,setQno }) => {
                         <li>SGST</li>
                         <li>Total</li>
                     </header>
-                    <div className="border  rounded-b-2xl 4">
+                    <div className="border  border-gray-500  rounded-b-2xl ">
                         {items.map((item, index) => (
-                            <div className="text-gray-500 bottom-b border-gray-300 " >
-                                <div key={index} className="pl-12 text-center grid grid-cols-8 gap-2 p-2 ">
+                            <div className="border-b rounded-b-2xl border-gray-300 text-gray-500  " >
+                                <div key={index} className=" pl-12 text-center grid grid-cols-8 gap-2 p-2 ">
                                     <label className="invoice" name="itemname">{item.item}</label>
                                     <label className="invoice" name="gst">{item.gst}</label>
                                     <label className="invoice" name="quantity">{item.quantity}</label>
