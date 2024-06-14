@@ -29,7 +29,7 @@ function App() {
         setQno(response.data);
         
       } catch (error) {
-        setError(error.message);
+        console.log(`Error updating quotation number: ${error.message}`);
       } finally {
         // Simulate 2 seconds delay
         setTimeout(() => {
