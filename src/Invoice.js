@@ -7,7 +7,7 @@ import InvoiceItems from './InvoiceItems';
 import InvoiceSumTotal from './InvoiceSumTotal';
 
 
-const Invoice = ({to,setTo,date,setDate,image,setImage,from,setFrom,items,setItems,addItems,setAddItems,qno}) => {
+const Invoice = ({to,setTo,date,setDate,image,setImage,from,setFrom,items,setItems,addItems,setAddItems,qno,disCount,setDisCount,total,setTotal}) => {
     const [error,setError]=useState({});
     
 
@@ -36,7 +36,8 @@ const Invoice = ({to,setTo,date,setDate,image,setImage,from,setFrom,items,setIte
             <ContentTop date={date} setDate={setDate} image={image} setImage={setImage}  title="Invoice" qno={qno} />
             <Quotation from={from} setFrom={setFrom} to={to} setTo={setTo} titleFrom="Billed From" titleTo="Billed To"/>
             <InvoiceItems items={items} setItems={setItems} addItems={addItems} setAddItems={setAddItems} />
-            <InvoiceSumTotal items={items}/>
+            <InvoiceSumTotal items={items} disCount={disCount} setDisCount={setDisCount} total={total}
+              setTotal={setTotal} />
             <div className="text-center">
                 {error.fromName && <p className="text-red-500">{error.fromName}</p>}
                 {error.toName && <p className="text-red-500">{error.toName}</p>}

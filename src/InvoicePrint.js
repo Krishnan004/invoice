@@ -4,33 +4,44 @@ import { FaRegEdit } from "react-icons/fa";
 import { IoShareSocialOutline } from "react-icons/io5";
 import { MdOutlineFileDownload } from "react-icons/md";
 import { useRef } from 'react';
-import { useReactToPrint } from 'react-to-print';
+import ReactToPrint, { useReactToPrint } from 'react-to-print';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import InvoiveListItems from './InvoiveListItems';
-import InvoiceSumTotal from './InvoiceSumTotal';
+import PrintTotal from './PrintTotal';
 import { IoIosArrowDown } from "react-icons/io";
 import { RxCross2 } from "react-icons/rx";
 import { LiaRupeeSignSolid } from "react-icons/lia";
 import api from "./api/quotationNo";
+import { LuRedo } from "react-icons/lu";
+import { LuUndo } from "react-icons/lu";
+
+
 import {
     WhatsappShareButton,
     WhatsappIcon, EmailShareButton,
     EmailIcon,
 } from 'next-share'
 import { Link } from 'react-router-dom';
+import PrintQuotation from './PrintQuotation';
+import PrintTop from './PrintTop';
 
-const InvoicePrint = ({ date, image, from, to, items, qno,setQno }) => {
+const InvoicePrint = ({ date, image, from, to, items, qno,setQno,disCount,setDisCount,total,setTotal }) => {
 
     const componentRef = useRef();
     const [share, setShare] = useState(false);
     const [descriptionVisible, setDescriptionVisible] = useState({});
-
+    const [activeItemId, setActiveItemId] = useState({});
+  
     const toggleDescription = (id) => {
-        setDescriptionVisible(prev => ({
-            ...prev,
-            [id]: !prev[id]
-        }));
+      setActiveItemId(prev => ({
+        ...prev,
+        [id]: !prev[id]
+      }));
+      setDescriptionVisible(prev => ({
+        ...prev,
+        [id]: !prev[id]
+      }));
     };
 
     const handlToePrint = useReactToPrint({
@@ -51,8 +62,7 @@ const InvoicePrint = ({ date, image, from, to, items, qno,setQno }) => {
         });
     };
 
-    const handlePrint = async () => {
-        window.print();
+    const handleRedo = async () => {
         try {
             const newQno = Number(qno)+1 ;
             await api.put("/qno",  { no: newQno } );
@@ -63,14 +73,35 @@ const InvoicePrint = ({ date, image, from, to, items, qno,setQno }) => {
         }
     };
 
+    const handleUndo = async () => {
+        try {
+            const newQno = Number(qno)-1 ;
+            await api.put("/qno",  { no: newQno } );
+            setQno({no:newQno});
+            console.log(qno)
+        } catch (error) {
+            console.log(`Error updating quotation number: ${error.message}`);
+        }
+    };
+
     return (
-        <main className="p-6 ">
-            <div className=" grid grid-cols-4 gap-6  float-right mx-12">
+        <main className="p-6 " >
+            <div className=" grid grid-cols-6 gap-6  float-right mx-12">
+                <LuUndo className="text-4xl" onClick={handleUndo} />
+                <LuRedo className="text-4xl" onClick={handleRedo} />
                 <Link to="/invoice"> <FaRegEdit className="text-4xl" /></Link>
                 <IoShareSocialOutline className="text-4xl" onClick={() => setShare(!share)} />
 
-                <MdOutlineFileDownload className="text-4xl" onClick={handlePrint} />
-                <TfiPrinter className="text-4xl" onClick={handlePrint} />
+                <MdOutlineFileDownload className="text-4xl" onClick={handleDownloadPdf} />
+                <ReactToPrint
+                    trigger={() => {
+                        // NOTE: could just as easily return <SomeComponent />. Do NOT pass an `onClick` prop
+                        // to the root node of the returned component as it will be overwritten.
+                        return <TfiPrinter className="text-4xl"  />;
+                    }}
+                    content={() =>componentRef.current}
+                    />
+                
                 {share && (
                     <>
                         <WhatsappShareButton
@@ -91,59 +122,10 @@ const InvoicePrint = ({ date, image, from, to, items, qno,setQno }) => {
                 )}
 
             </div>
-            <div className="m-12 p-6  border border-gray-700 rounded-xl">
-                <h3 className="p-8 text-gray-600 text-2xl  font-bold ">Invoice</h3>
-                <div className="mx-8 my-8">
-                    <label htmlFor="quotation_no" className=" text-gray-600 inline block text-left mt-4">Quotation No.</label>
-                    <label>{`SPI${qno.toString().padStart(3, '0')}`}</label>
-                    <br />
-                    <label htmlFor="quotation_date" className="text-gray-600 inline block text-left mt-4">Quotation Date: </label>
-                    <label htmlFor="quotation_date" className="">{date}</label>
-                    <image className="flex float-right -mt-28 mr-8">
-                        <img src={image} alt="Uploaded" className=" w-80 h-40 object-contain" />
-                    </image>
-                </div>
-
-                <quotation className="mx-auto grid grid-cols-2 gap-4 w-max-92  p-8">
-                    <from className=" p-8 border border-gray-500 rounded-xl">
-                        <h2 className="p-2 text-gray-600 text-2xl font-bold">Billed From</h2>
-
-                        <h3 className="p-2 my-2 text-gray-600 text-2xl font-bold">{from.name}</h3>
-                        <address className="p-2">
-                            <label >{from.address}</label><br />
-                            <label >{from.city} {from.state}</label><br/>
-                            <label>{from.pincode}</label>
-                        </address>
-                        {from.email && (
-                            <>
-                                <label className="p-2 text-gray-600 text-2xl font-bold">Email:</label>
-                                <label >{from.email}</label><br /><br />
-                            </>
-                        )}
-
-                        <label className="p-2 text-gray-600 text-2xl font-bold">Phone No:</label>
-                        <label>{from.mobile}</label><br />
-                    </from>
-                    <to className=" p-8 border border-gray-500 rounded-xl">
-                        <h2 className="p-2 text-gray-600 text-2xl font-bold">Billed To</h2>
-
-                        <h3 className="p-2 my-2 text-gray-600 text-2xl font-bold">{to.name}</h3>
-                        <address className="p-2">
-                            <label >{to.address}</label><br />
-                            <label >{to.city} {to.state}</label><br/>
-                            <label>{to.pincode}</label>
-                        </address>
-                        {from.email && (
-                            <>
-                                <label className="p-2 text-gray-600 text-2xl font-bold">Email:</label>
-                                <label >{to.email}</label><br /><br />
-                            </>
-                        )}
-                        <label className="p-2 text-gray-600 text-2xl font-bold">Phone No:</label>
-                        <label>{to.mobile}</label><br />
-                    </to>
-                </quotation>
-                <div className=" mx-8 ">
+            <div  ref={componentRef} className="m-12 p-6  border border-gray-700 rounded-xl">
+                <PrintTop image={image} qno={qno} date={date} title="Invoice"  />
+                <PrintQuotation from={from} to={to} TitleFrom="Billed From" TitleTo="Billed To" />
+                <div className=" mx-4 ">
                     <header className="pl-2 bg-custom-blue grid grid-cols-8 list-none text-white rounded-t-2xl text-center text-xl py-6 mt-0">
                         <li>Item</li>
                         <li>GST</li>
@@ -157,7 +139,7 @@ const InvoicePrint = ({ date, image, from, to, items, qno,setQno }) => {
                     <div className="border  border-gray-500  rounded-b-2xl ">
                         {items.map((item, index) => (
                             <div className="border-b rounded-b-2xl border-gray-300 text-gray-500  " >
-                                <div key={index} className=" pl-12 text-center grid grid-cols-8 gap-2 p-2 ">
+                                <div key={index} className=" pl-12 text-center grid grid-cols-8 gap-2 p-2 text-xs sm:text-sm">
                                     <label className="invoice" name="itemname">{item.item}</label>
                                     <label className="invoice" name="gst">{item.gst}</label>
                                     <label className="invoice" name="quantity">{item.quantity}</label>
@@ -169,7 +151,12 @@ const InvoicePrint = ({ date, image, from, to, items, qno,setQno }) => {
                                         <label className="item" name="total"><LiaRupeeSignSolid className="inline"/>{((item.quantity * item.rate) + (item.quantity * item.rate) * item.gst / 100).toFixed(3)}</label>
                                     </div>
                                 </div >
-                                <IoIosArrowDown className="ml-11 cursor-pointer" onClick={() => toggleDescription(item.id)} />
+                                <IoIosArrowDown
+                                    className={`ml-11 cursor-pointer transform transition-transform duration-300 ${
+                                    activeItemId[item.id] ? 'rotate-180' : ''
+                                    }`}
+                                    onClick={() => toggleDescription(item.id)}
+                                />
                                 {descriptionVisible[item.id] && (
                                     <>
                                         <h2 className="ml-11 inline">Description:</h2>
@@ -181,7 +168,8 @@ const InvoicePrint = ({ date, image, from, to, items, qno,setQno }) => {
                         ))}
 
                     </div>
-                <InvoiceSumTotal items={items} />
+                    
+                <PrintTotal items={items} disCount={disCount} setDisCount={setDisCount} total={total} setTotal={setTotal} />
                 </div>
             </div>
             

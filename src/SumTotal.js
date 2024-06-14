@@ -12,7 +12,7 @@ const SumTotal = ({items}) => {
 
     return (
         <div className="mb-2">
-            <label className=" text-2xl text-gray-500 flex justify-end">Total Amount  <span className="mx-8 text-gray-600 font-bold" ><LiaRupeeSignSolid className="inline"/>{sumTotal.toFixed(3)}</span></label>
+            <label className="  text-2xl text-gray-500 flex justify-end items-center">Total Amount  <span className="mx-8 text-gray-600 font-bold" ><span className="font-sans font-medium">₹ </span>{sumTotal.toFixed(3)}</span></label>
         </div>
     )
 }

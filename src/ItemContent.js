@@ -22,11 +22,11 @@ const ItemContent = ({items,setItems}) => {
             const listItems={id,item:itemName,quantity:quantity,rate:rate,total,description:description}
             const updatedItems=[...items,listItems]
             setItems(updatedItems);
-            // setItemName('')
-            // setRate('')
-            // setQuantity('')
-            // setTotal('')
-            // setDescription('')
+            setItemName('')
+            setRate('')
+            setQuantity('')
+            setTotal('')
+            setDescription('')
         }
         
         

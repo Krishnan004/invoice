@@ -8,6 +8,8 @@ import Invoice from './Invoice';
 import InvoicePrint from './InvoicePrint';
 import api from "./api/quotationNo";
 import Loading from './Loading';
+import PrintTotal from './InvoicePrint';
+import InvoiceSumTotal from './InvoiceSumTotal';
 
 function App() {
   const [items, setItems] = useState([]);
@@ -19,6 +21,8 @@ function App() {
   const [qno, setQno] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [disCount, setDisCount] = useState(0);
+  const [total,setTotal]=useState(0);
 
   useEffect(() => {
     const fetchQuotationNo = async () => {
@@ -90,13 +94,17 @@ function App() {
               date={date}
               to={to}
               setTo={setTo}
+              disCount={disCount} setDisCount={setDisCount}
+              total={total}
+              setTotal={setTotal}
               qno={qno ? qno.no : ''}
             />
           }
         />
         <Route
           path="/invoiceprint"
-          element={<InvoicePrint date={date} from={from} to={to} items={items} image={image}  qno={qno ? qno.no : ''} setQno={setQno}/>}
+          element={<InvoicePrint date={date} from={from} to={to} items={items} image={image}  qno={qno ? qno.no : ''} setQno={setQno} disCount={disCount} setDisCount={setDisCount} total={total}
+          setTotal={setTotal} />}
         />
       </Routes>
     </div>

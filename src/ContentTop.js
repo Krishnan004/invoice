@@ -26,13 +26,22 @@ const ContentTop = ({ date, setDate, image, setImage,title,qno }) => {
 
             <h3 className="p-8 text-custom-blue text-3xl font-bold text-center block">{title}</h3>
             <div className="mx-8 my-2 relative">
-                <label htmlFor="quotation_no" className=" inline block text-left font-medium text-custom-blue text-xl mt-4 mr-2">Quotation No.</label>
+                <label htmlFor="quotation_no" className=" inline block text-left font-medium text-custom-blue text-xl mt-4 mr-2">Quotation No : </label>
                 {qno &&(
-                <input type="text" className="top" id="quotation_no" placeholder="Enter Quotation No." value={`SPI${qno.toString().padStart(3, '0')}`}
-                />)}
+                 <label>{`SPI${qno.toString().padStart(3, '0')}`}</label>
+                 )}
                 <br />
-                <label htmlFor="quotation_date" className="inline block text-left mt-4 font-medium text-custom-blue text-xl">Quotation Date</label>
-                <input type="date" id="quotation_date" className="top" name=" quotation_date" placeholder="Select Date" value={date} onChange={(e) => setDate(e.target.value)} />
+                <label htmlFor="quotation_date" className="inline block text-left mt-4 font-medium text-custom-blue text-xl">Quotation Date :</label>
+                <input
+                    type="date"
+                    id="quotation_date"
+                    className="top"
+                    name="quotation_date"
+                    placeholder="Select Date"
+                    value={date}
+                    onChange={(e) => setDate(e.target.value)}
+                />
+
                 <input
                 id="file-upload"
                 type="file"

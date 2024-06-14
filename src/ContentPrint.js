@@ -3,12 +3,14 @@ import { TfiPrinter } from "react-icons/tfi";
 import { FaRegEdit } from "react-icons/fa";
 import { IoShareSocialOutline } from "react-icons/io5";
 import { MdOutlineFileDownload } from "react-icons/md";
-import { useReactToPrint } from 'react-to-print';
+import ReactToPrint, { useReactToPrint } from 'react-to-print';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import SumTotal from './SumTotal';
 import { Link } from 'react-router-dom';
 import api from "./api/quotationNo";
+import { LuRedo } from "react-icons/lu";
+import { LuUndo } from "react-icons/lu";
 import {
     WhatsappShareButton,
     WhatsappIcon, 
@@ -16,6 +18,8 @@ import {
     EmailIcon,
 } from 'next-share';
 import { IoIosArrowDown } from "react-icons/io";
+import PrintQuotation from './PrintQuotation';
+import PrintTop from './PrintTop';
 
 const ContentPrint = ({ date, image, from, to, items, qno, setQno }) => {
 
@@ -23,9 +27,20 @@ const ContentPrint = ({ date, image, from, to, items, qno, setQno }) => {
     const [share, setShare] = useState(false);
     const [showDescription, setShowDescription] = useState(false);
     const [descriptionVisible, setDescriptionVisible] = useState({});
-
-    const handlePrint = async () => {
-        window.print();
+    const [activeItemId, setActiveItemId] = useState({});
+  
+    const toggleDescription = (id) => {
+      setActiveItemId(prev => ({
+        ...prev,
+        [id]: !prev[id]
+      }));
+      setDescriptionVisible(prev => ({
+        ...prev,
+        [id]: !prev[id]
+      }));
+    };
+    
+    const handleRedo = async () => {
         try {
             const newQno = Number(qno)+1 ;
             await api.put("/qno",  { no: newQno } );
@@ -36,32 +51,48 @@ const ContentPrint = ({ date, image, from, to, items, qno, setQno }) => {
         }
     };
 
-    const toggleDescription = (id) => {
-        setDescriptionVisible(prev => ({
-            ...prev,
-            [id]: !prev[id]
-        }));
+    const handleUndo = async () => {
+        try {
+            const newQno = Number(qno)-1 ;
+            await api.put("/qno",  { no: newQno } );
+            setQno({no:newQno});
+            console.log(qno)
+        } catch (error) {
+            console.log(`Error updating quotation number: ${error.message}`);
+        }
     };
 
     const handleDownload = () => {
-        const input = document.getElementById('quotation');
-        html2canvas(input)
-            .then((canvas) => {
+        const input = componentRef.current;
+        html2canvas(input).then((canvas) => {
                 const imgData = canvas.toDataURL('image/png');
                 const pdf = new jsPDF();
-                pdf.addImage(imgData, 'JPEG', 0, 0);
+                const imgProps = pdf.getImageProperties(imgData);
+                const pdfWidth = pdf.internal.pageSize.getWidth();
+                const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+                pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
                 pdf.save("download.pdf");
+                console.log(pdfWidth)
             });
     };
 
     return (
         <main className="p-6">
-            <div className=" grid grid-cols-4 gap-6  float-right mx-12">
+            <div className=" grid grid-cols-6 gap-6  float-right mx-12">
+            <LuUndo className="text-4xl" onClick={handleUndo} />
+                <LuRedo className="text-4xl" onClick={handleRedo} />
                 <Link to="/"> <FaRegEdit className="text-4xl" /></Link>
                 <IoShareSocialOutline className="text-4xl" onClick={() => setShare(!share)} />
 
-                <MdOutlineFileDownload className="text-4xl" onClick={handlePrint} />
-                <TfiPrinter className="text-4xl" onClick={handlePrint} />
+                <MdOutlineFileDownload className="text-4xl" onClick={handleDownload} />
+                <ReactToPrint
+                    trigger={() => {
+                        // NOTE: could just as easily return <SomeComponent />. Do NOT pass an `onClick` prop
+                        // to the root node of the returned component as it will be overwritten.
+                        return <TfiPrinter className="text-4xl"  />;
+                    }}
+                    content={() =>componentRef.current}
+                    />
                 {share && (
                     <>
                         <WhatsappShareButton
@@ -82,59 +113,10 @@ const ContentPrint = ({ date, image, from, to, items, qno, setQno }) => {
                 )}
 
             </div>
-             
-            <div className="m-12 p-6 border border-gray-500 rounded-xl text-gray-500 ">
-                <h3 className="p-4 text-gray-600 text-xl text-center sm:text-2xl font-bold">Quotation</h3>
-                <div className="mx-4 my-4">
-                    <div className="flex flex-col sm:flex-row justify-between">
-                        <div>
-                            <label htmlFor="quotation_no" className="text-gray-600  mt-4">Quotation No.</label>
-                            <label>{`SPI${qno.toString().padStart(3, '0')}`}</label>
-                            <br />
-                            <label htmlFor="quotation_date" className="text-gray-600  mt-4">Quotation Date: </label>
-                            <label htmlFor="quotation_date" >{date}</label>
-                        </div>
-                        <div className="flex justify-end mt-4 sm:mt-0">
-                            <img src={image} alt="Uploaded" className="w-40 h-20 sm:w-80 sm:h-40 object-contain" />
-                        </div>
-                    </div>
-                </div>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mx-4 my-4">
-                    <div className="p-4 border border-gray-500 rounded-xl">
-                        <h2 className="text-gray-600 text-xl sm:text-2xl font-bold">Quotation From</h2>
-                        <h3 className="my-2 text-gray-600 text-xl sm:text-2xl font-bold">{from.name}</h3>
-                        <address>
-                            <label>{from.address}</label><br />
-                            <label >{from.city} {from.state}</label><br/>
-                            <label>{from.pincode}</label>
-                        </address>
-                        {from.email && (
-                            <>
-                                <label className="text-gray-600 text-xl sm:text-2xl font-bold">Email:</label>
-                                <label>{from.email}</label><br /><br />
-                            </>
-                        )}
-                        <label className="text-gray-600 text-xl sm:text-2xl font-bold">Phone No:</label>
-                        <label>{from.mobile}</label><br />
-                    </div>
-                    <div className="p-4 border border-gray-500 rounded-xl">
-                        <h2 className="text-gray-600 text-xl sm:text-2xl font-bold">Quotation To</h2>
-                        <h3 className="my-2 text-gray-600 text-xl sm:text-2xl font-bold">{to.name}</h3>
-                        <address>
-                            <label>{to.address}</label><br />
-                            <label >{to.city} {to.state}</label><br/>
-                            <label>{to.pincode}</label>
-                        </address>
-                        {to.email && (
-                            <>
-                                <label className="text-gray-600 text-xl sm:text-2xl font-bold">Email:</label>
-                                <label>{to.email}</label><br /><br />
-                            </>
-                        )}
-                        <label className="text-gray-600 text-xl sm:text-2xl font-bold">Phone No:</label>
-                        <label>{to.mobile}</label><br />
-                    </div>
-                </div>
+             <div ref={componentRef}>
+            <div  className="m-12 p-6 border border-gray-500 rounded-xl text-gray-500 ">
+            <PrintTop image={image} qno={qno} date={date} title={"Quotation"} />
+               <PrintQuotation from={from} to={to} TitleFrom="Quotation From" TitleTo="Quotation To"/>
                 <div className="border border-gray-500 rounded-xl mx-4">
                     <header className="p-2 pl-4 bg-gray-600 grid grid-cols-5 list-none text-white rounded-t-xl text-sm sm:text-xl">
                         <li>Item</li>
@@ -144,15 +126,20 @@ const ContentPrint = ({ date, image, from, to, items, qno, setQno }) => {
                         <li>Total</li>
                     </header>
                     {items.map((item, index) => (
-                        <div key={index} className="text-gray-500 border-b p-2 pl-4">
+                        <div key={index} className="text-gray-600 border-b rounded-xl p-2 pl-4">
                             <div className="grid grid-cols-5 gap-2 text-xs sm:text-sm" onClick={() => setShowDescription(!showDescription)}>
                                 <label name="itemname">{item.item}</label>
                                 <label name="quantity">{item.quantity}</label>
-                                <label name="rate">₹{item.rate}</label>
-                                <label name="amount">₹{item.quantity * item.rate}</label>
-                                <label name="total">₹{item.total}</label>
+                                <label name="rate"><span className="font-sans font-medium">₹ </span>{(item.rate)}</label>
+                                <label name="amount"><span className="font-sans font-medium">₹ </span>{(item.quantity * item.rate).toFixed(2)}</label>
+                                <label name="total"><span className="font-sans font-medium">₹ </span>{(item.total).toFixed(2)}</label>
                             </div>
-                            <IoIosArrowDown className="ml-1 cursor-pointer" onClick={() => toggleDescription(item.id)} />
+                            <IoIosArrowDown
+                                    className={`ml-11 cursor-pointer transform transition-transform duration-300 ${
+                                    activeItemId[item.id] ? 'rotate-180' : ''
+                                    }`}
+                                    onClick={() => toggleDescription(item.id)}
+                                />
                             {descriptionVisible[item.id] && (
                                 <>
                                     <h2 className="ml-1 inline">Description:</h2>
@@ -164,6 +151,7 @@ const ContentPrint = ({ date, image, from, to, items, qno, setQno }) => {
                 </div>
                 <SumTotal items={items} />
                 
+            </div>
             </div>
         </main>
     );
