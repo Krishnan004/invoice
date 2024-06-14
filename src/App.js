@@ -8,8 +8,6 @@ import Invoice from './Invoice';
 import InvoicePrint from './InvoicePrint';
 import api from "./api/quotationNo";
 import Loading from './Loading';
-import PrintTotal from './InvoicePrint';
-import InvoiceSumTotal from './InvoiceSumTotal';
 
 function App() {
   const [items, setItems] = useState([]);

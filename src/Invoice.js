@@ -1,8 +1,7 @@
 import React, { useState } from 'react'
 import ContentTop from './ContentTop';
 import Quotation from './Quotation';
-import Items from './Items';
-import { Link, useNavigate } from 'react-router-dom';
+import {  useNavigate } from 'react-router-dom';
 import InvoiceItems from './InvoiceItems';
 import InvoiceSumTotal from './InvoiceSumTotal';
 

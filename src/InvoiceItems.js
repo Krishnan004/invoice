@@ -1,7 +1,6 @@
 
 import React, { useState,useEffect } from 'react'
 import InvoiveListItems from './InvoiveListItems';
-import InvoiceSumTotal from './InvoiceSumTotal';
 
 const InvoiceItems = ({items,setItems,addItems,setAddItems}) => {
     const [showTextarea, setShowTextarea] = useState(false);

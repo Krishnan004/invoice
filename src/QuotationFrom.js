@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
-import Items from './Items';
 
 const QuotationForm = ({ from, setFrom, titleFrom }) => {
     const [busName, setBusName] = useState(from.name || '');

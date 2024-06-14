@@ -1,5 +1,4 @@
 import React, { useState,useEffect } from 'react'
-import { LiaRupeeSignSolid } from "react-icons/lia";
 
 const SumTotal = ({items}) => {
 

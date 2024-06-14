@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { RxCross2 } from "react-icons/rx";
 import { LiaRupeeSignSolid } from "react-icons/lia";
 
 const PrintTotal = ({ items,disCount,total}) => {
