@@ -42,25 +42,25 @@ const ContentPrint = ({ date, image, from, to, items, qno, setQno }) => {
     };
     
     const handleRedo = async () => {
-        try {
+        // try {
             const newQno = Number(qno)+1 ;
-            await api.put("/qno",  { no: newQno } );
+        //     await api.put("/qno",  { no: newQno } );
             setQno({no:newQno});
-            console.log(qno)
-        } catch (error) {
-            console.log(`Error updating quotation number: ${error.message}`);
-        }
+        //     console.log(qno)
+        // } catch (error) {
+        //     console.log(`Error updating quotation number: ${error.message}`);
+        // }
     };
 
     const handleUndo = async () => {
-        try {
+        // try {
             const newQno = Number(qno)-1 ;
-            await api.put("/qno",  { no: newQno } );
+        //     await api.put("/qno",  { no: newQno } );
             setQno({no:newQno});
-            console.log(qno)
-        } catch (error) {
-            console.log(`Error updating quotation number: ${error.message}`);
-        }
+        //     console.log(qno)
+        // } catch (error) {
+        //     console.log(`Error updating quotation number: ${error.message}`);
+        // }
     };
 
     const handleDownload = () => {

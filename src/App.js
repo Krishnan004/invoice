@@ -16,33 +16,35 @@ function App() {
   const [to, setTo] = useState({});
   const [image, setImage] = useState(null);
   const [date, setDate] = useState(null);
-  const [qno, setQno] = useState(null);
+  const [qno, setQno] = useState({
+    no: 1
+  });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [disCount, setDisCount] = useState(0);
   const [total,setTotal]=useState(0);
 
-  useEffect(() => {
-    const fetchQuotationNo = async () => {
-      try {
-        const response = await api.get('/qno');
-        setQno(response.data);
+  // useEffect(() => {
+  //   const fetchQuotationNo = async () => {
+  //     try {
+  //       const response = await api.get('/qno');
+  //       setQno(response.data);
         
-      } catch (error) {
-        console.log(`Error updating quotation number: ${error.message}`);
-      } finally {
-        // Simulate 2 seconds delay
-        setTimeout(() => {
-          setLoading(false);
-        }, 1000);
-      }
-    };
-    fetchQuotationNo();
-  }, []);
+  //     } catch (error) {
+  //       console.log(`Error updating quotation number: ${error.message}`);
+  //     } finally {
+  //       // Simulate 2 seconds delay
+  //       setTimeout(() => {
+  //         setLoading(false);
+  //       }, 1000);
+  //     }
+  //   };
+  //   fetchQuotationNo();
+  // }, []);
 
-  if (loading) {
-    return <Loading />;
-  }
+  // if (loading) {
+  //   return <Loading />;
+  // }
 
   if (error) {
     return <div>Error: {error}</div>;

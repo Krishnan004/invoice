@@ -49,37 +49,53 @@ const InvoicePrint = ({ date, image, from, to, items, qno,setQno,disCount,setDis
 
     const handleDownloadPdf = () => {
         const input = componentRef.current;
-        html2canvas(input).then((canvas) => {
+        const scale = window.devicePixelRatio || 1;
+
+        html2canvas(input, { scale }).then((canvas) => {
             const imgData = canvas.toDataURL('image/png');
             const pdf = new jsPDF('p', 'mm', 'a4');
-            const imgProps = pdf.getImageProperties(imgData);
             const pdfWidth = pdf.internal.pageSize.getWidth();
-            const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
-            pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+            const pdfHeight = pdf.internal.pageSize.getHeight();
+
+            const imgWidth = pdfWidth;
+            const imgHeight = (canvas.height * pdfWidth) / canvas.width;
+
+            if (imgHeight > pdfHeight) {
+                pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, pdfHeight);
+                let position = pdfHeight;
+                while (position < imgHeight) {
+                    pdf.addPage();
+                    pdf.addImage(imgData, 'PNG', 0, -position, imgWidth, imgHeight);
+                    position += pdfHeight;
+                }
+            } else {
+                pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
+            }
+
             pdf.save('download.pdf');
         });
     };
 
     const handleRedo = async () => {
-        try {
+        // try {
             const newQno = Number(qno)+1 ;
-            await api.put("/qno",  { no: newQno } );
+        //     await api.put("/qno",  { no: newQno } );
             setQno({no:newQno});
-            console.log(qno)
-        } catch (error) {
-            console.log(`Error updating quotation number: ${error.message}`);
-        }
+        //     console.log(qno)
+        // } catch (error) {
+        //     console.log(`Error updating quotation number: ${error.message}`);
+        // }
     };
 
     const handleUndo = async () => {
-        try {
+        // try {
             const newQno = Number(qno)-1 ;
-            await api.put("/qno",  { no: newQno } );
+        //     await api.put("/qno",  { no: newQno } );
             setQno({no:newQno});
-            console.log(qno)
-        } catch (error) {
-            console.log(`Error updating quotation number: ${error.message}`);
-        }
+        //     console.log(qno)
+        // } catch (error) {
+        //     console.log(`Error updating quotation number: ${error.message}`);
+        // }
     };
 
     return (
