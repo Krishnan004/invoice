@@ -7,7 +7,7 @@
 @layer components {
   input {
     /* Default styles for all input elements */
-    @apply w-32 sm:w-96 sm:mx-2 sm:mx-8 mt-1 border-b border-gray-500 px-2 sm:px-4 py-2 text-custom-blue inline;
+    @apply w-32 sm:w-72 2xl:w-96 sm:mx-2 sm:mx-8 mt-1 border-b border-gray-500 px-2 sm:px-4 py-2 text-custom-blue inline;
   }
   
   #item {
