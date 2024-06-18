@@ -42,39 +42,39 @@ const InvoicePrint = ({ date, image, from, to, items, qno,setQno,disCount,setDis
       }));
     };
 
-    const handlToePrint = useReactToPrint({
-        content: () => componentRef.current,
-        onAfterPrint: () => handleDownloadPdf(),
-    });
-
-    const handleDownloadPdf = () => {
+    const handleDownloadPdf = async () => {
         const input = componentRef.current;
         const scale = window.devicePixelRatio || 1;
-
-        html2canvas(input, { scale }).then((canvas) => {
+    
+        try {
+            const canvas = await html2canvas(input, { scale });
             const imgData = canvas.toDataURL('image/png');
+    
             const pdf = new jsPDF('p', 'mm', 'a4');
             const pdfWidth = pdf.internal.pageSize.getWidth();
             const pdfHeight = pdf.internal.pageSize.getHeight();
-
+    
             const imgWidth = pdfWidth;
             const imgHeight = (canvas.height * pdfWidth) / canvas.width;
-
+    
             if (imgHeight > pdfHeight) {
-                pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, pdfHeight);
-                let position = pdfHeight;
-                while (position < imgHeight) {
+                let currentPosition = 0;
+                while (currentPosition < imgHeight) {
                     pdf.addPage();
-                    pdf.addImage(imgData, 'PNG', 0, -position, imgWidth, imgHeight);
-                    position += pdfHeight;
+                    pdf.addImage(imgData, 'PNG', 0, -currentPosition, imgWidth, imgHeight);
+                    currentPosition += pdfHeight;
                 }
             } else {
                 pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
             }
-
+    
             pdf.save('download.pdf');
-        });
+        } catch (error) {
+            console.error('Error generating PDF:', error);
+        }
     };
+    
+    
 
     const handleRedo = async () => {
         // try {

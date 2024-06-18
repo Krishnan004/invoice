@@ -63,18 +63,33 @@ const ContentPrint = ({ date, image, from, to, items, qno, setQno }) => {
         // }
     };
 
-    const handleDownload = () => {
+    const handleDownloadPdf = () => {
         const input = componentRef.current;
-        html2canvas(input).then((canvas) => {
-                const imgData = canvas.toDataURL('image/png');
-                const pdf = new jsPDF();
-                const imgProps = pdf.getImageProperties(imgData);
-                const pdfWidth = pdf.internal.pageSize.getWidth();
-                const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
-                pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
-                pdf.save("download.pdf");
-                console.log(pdfWidth)
-            });
+        const scale = window.devicePixelRatio || 1;
+
+        html2canvas(input, { scale }).then((canvas) => {
+            const imgData = canvas.toDataURL('image/png');
+            const pdf = new jsPDF('p', 'mm', 'a4');
+            const pdfWidth = pdf.internal.pageSize.getWidth();
+            const pdfHeight = pdf.internal.pageSize.getHeight();
+
+            const imgWidth = pdfWidth;
+            const imgHeight = (canvas.height * pdfWidth) / canvas.width;
+
+            if (imgHeight > pdfHeight) {
+                pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, pdfHeight);
+                let position = pdfHeight;
+                while (position < imgHeight) {
+                    pdf.addPage();
+                    pdf.addImage(imgData, 'PNG', 0, -position, imgWidth, imgHeight);
+                    position += pdfHeight;
+                }
+            } else {
+                pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
+            }
+
+            pdf.save('download.pdf');
+        });
     };
 
     return (
@@ -85,7 +100,7 @@ const ContentPrint = ({ date, image, from, to, items, qno, setQno }) => {
                 <Link to="/"> <FaRegEdit className="" /></Link>
                 <IoShareSocialOutline className="" onClick={() => setShare(!share)} />
 
-                <MdOutlineFileDownload className="" onClick={handleDownload} />
+                <MdOutlineFileDownload className="" onClick={handleDownloadPdf} />
                 <ReactToPrint
                     trigger={() => {
                         // NOTE: could just as easily return <SomeComponent />. Do NOT pass an `onClick` prop
