@@ -19,8 +19,8 @@ const PrintTotal = ({ items,disCount,total}) => {
     }, [total,sumTotal,items]);
 
     return (
-        <div className="m-2  grid justify-items-end gap-2">
-            <div className="m-2 grid grid-cols-2 gap-2 text-gray-500 text-lg  w-80">
+        <div className="m-8 sm:m-2  grid justify-items-end gap-2">
+            <div className="m-2 grid grid-cols-2 gap-2 text-gray-500 text-lg  sm:w-80">
                 <label >
                     Amount: 
                 </label>
@@ -42,9 +42,9 @@ const PrintTotal = ({ items,disCount,total}) => {
                     <label className="text-red-500"><LiaRupeeSignSolid className="inline "/>{disCount.toFixed(2)}</label>
                 )}
                 </div>
-                <div className="border-y border-gray-500 inline p-4">
-                <label className="text-2xl text-gray-500">
-                    Total Amount <span className="mx-8 text-gray-600 font-bold"><span className="font-sans font-medium">₹ </span>{total}</span>
+                <div className="border-y border-gray-500 inline p-2 sm:p-4">
+                <label className="sm:text-2xl text-gray-500">
+                    Total Amount <span className="sm:mx-8 text-gray-600 font-bold"><span className="font-sans font-medium">₹</span>{total}</span>
                 </label>
             </div>
                 

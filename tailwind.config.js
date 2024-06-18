@@ -12,6 +12,7 @@ module.exports = {
         poppins:["Poppins"]
       },
     },
+    
   },
   variants: {},
   plugins: [],

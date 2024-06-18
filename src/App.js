@@ -34,7 +34,7 @@ function App() {
         // Simulate 2 seconds delay
         setTimeout(() => {
           setLoading(false);
-        }, 2000);
+        }, 1000);
       }
     };
     fetchQuotationNo();
@@ -47,10 +47,21 @@ function App() {
   if (error) {
     return <div>Error: {error}</div>;
   }
+  const resetStates = () => {
+    setItems([]);
+    setAddItems([]);
+    setFrom({});
+    setTo({});
+    setImage(null);
+    setDate(null);
+    setDisCount(0);
+    setTotal(0);
+  };
+ 
 
   return (
     <div className=" font-poppins text-custom-blue">
-      <Header />
+      <Header   resetStates={resetStates} />
       <Routes>
         <Route
           path="/"
@@ -98,6 +109,7 @@ function App() {
               qno={qno ? qno.no : ''}
             />
           }
+         
         />
         <Route
           path="/invoiceprint"

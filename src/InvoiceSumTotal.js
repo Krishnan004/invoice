@@ -47,8 +47,8 @@ const InvoiceSumTotal = ({ items,disCount,setDisCount,total,setTotal}) => {
     }, [total,sumTotal,items]);
 
     return (
-        <div className="m-8  grid justify-items-end gap-2 text-gray-500 text-lg">
-            <div className="m-2 mx-12 grid grid-cols-2 gap-2 justify-items-end   w-80">
+        <div className="m-2 sm:m-8  grid justify-items-end gap-2 text-gray-500 sm:text-lg">
+            <div className="m-2 mr-4 sm:mx-12 grid grid-cols-2 gap-2 justify-items-end   sm:w-80">
                 <label >
                     Amount: 
                 </label>
@@ -92,7 +92,7 @@ const InvoiceSumTotal = ({ items,disCount,setDisCount,total,setTotal}) => {
                 <label className="block" onClick={handleRoundOff}>Round Off</label>
             </div>
             <div className="border-y border-gray-500 inline p-4">
-                <label className="text-2xl text-gray-500">
+                <label className="sm:text-2xl text-gray-500">
                     Total Amount <span className="mx-8 text-gray-600 font-bold"><LiaRupeeSignSolid className="inline"/>{total}</span>
                 </label>
             </div>

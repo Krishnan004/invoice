@@ -52,8 +52,8 @@ const QuotationTo = ({ to, setTo, titleTo }) => {
     }, [busName, email, mobNumber, city, pinCode, address, state]);
 
     return (
-        <form className="p-8 border rounded-3xl border-gray-400" onBlur={handleSubmit}>
-            <h2 className="p-8 text-custom-blue text-2xl font-bold">{titleTo}</h2>
+        <form className="p-8 border rounded-3xl border-gray-400 2xl:px-20" onBlur={handleSubmit}>
+            <h2 className="p-6 sm:p-8 text-custom-blue sm:text-2xl font-bold 2xl:text-3xl">{titleTo}</h2>
             <div>
                 <input
                     type="text"

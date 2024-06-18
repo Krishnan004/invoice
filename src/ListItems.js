@@ -29,13 +29,14 @@ const ListItems = ({ items, setItems }) => {
     <div>
           {items.map((item) => (
             <div key={item.id} className="text-gray-500 border-b border-gray-400 rounded-xl">
-              <div className="px-12 grid grid-cols-5 gap-2 p-2">
-                <label className="item" name="itemname">{item.item}</label>
-                <label className="item" name="quantity">{item.quantity}</label>
-                <label className="item" name="rate"><LiaRupeeSignSolid className="inline"/>{(item.rate)}</label>
-                <label className="item" name="amount"><LiaRupeeSignSolid className="inline"/>{(item.quantity * item.rate).toFixed(2)}</label>
-                <div className="flex items-center">
-                  <label className="item" name="total"><LiaRupeeSignSolid className="inline"/>{(item.total).toFixed(2)}</label>
+              <div className="sm:px-12 grid grid-cols-2 sm:grid sm:grid-cols-5 gap-2 p-2">
+              <label className="sm:hidden" >Item:</label><p className="item" name="itemname">{item.item}</p>
+                <label className="sm:hidden" id="quantity">Quantity:</label><p className="item" name="quantity">{item.quantity}</p>
+                <label className="sm:hidden" >Rate:</label><p className="item" name="rate"><LiaRupeeSignSolid className="inline"/>{(item.rate)}</p>
+                <label className="sm:hidden">Amount:</label><p className="item" name="amount"><LiaRupeeSignSolid className="inline"/>{(item.quantity * item.rate).toFixed(2)}</p>
+                <label className="sm:hidden">Total:</label>
+                <div className="flex items-center ">
+                <p className="item" name="total"><LiaRupeeSignSolid className="inline"/>{(item.total).toFixed(2)}</p>
                   <RxCross2 className="ml-2 text-2xl cursor-pointer float-right  " onClick={() => handleDelete(item.id)} />
                 </div>
               </div>
@@ -47,7 +48,7 @@ const ListItems = ({ items, setItems }) => {
               />
               {descriptionVisible[item.id] && (
                 <>
-                  <h2 className="ml-11 inline">Description:</h2>
+                  <h2 className="sm:ml-11 inline">Description:</h2>
                   <label name="description" className="m-4 text-gray-500 text-xs">{item.description}</label>
                 </>
               )}

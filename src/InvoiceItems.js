@@ -44,20 +44,26 @@ const InvoiceItems = ({items,setItems,addItems,setAddItems}) => {
     
 
     return (
-        <main className="mx-10 border rounded-2xl border-gray-400 ">
+        <main className=" p-2 mx-8 border rounded-2xl border-gray-400 ">
+        <div className="my-2 sm:mx-8 border rounded-2xl border-gray-400 ">
             <header className="pl-2 bg-custom-blue grid grid-cols-8 list-none text-white rounded-t-2xl text-center text-xl py-6">
                 <li>Item</li>
-                <li>GST</li>
-                <li>Quantity</li>
-                <li>Rate</li>
-                <li>Amount</li>
-                <li>CGST</li>
-                <li>SGST</li>
-                <li>Total</li>
+                <li className="hidden sm:block">GST</li>
+                <li className="hidden sm:block">Quantity</li>
+                <li className="hidden sm:block">Rate</li>
+                <li className="hidden sm:block">Amount</li>
+                <li className="hidden sm:block">CGST</li>
+                <li className="hidden sm:block">SGST</li>
+                <li className="hidden sm:block">Total</li>
             </header>
+            {items.length === 0 &&(
+                        <p className="text-center">Empty</p>
+                        )}
             <InvoiveListItems items={items} setItems={setItems} />
+            </div>
+            <div className="sm:mx-8 border rounded-2xl border-gray-400 ">
             <main >
-                <form onSubmit={handleAddItems} class=" grid grid-cols-8 gap-2 ">
+                <form onSubmit={handleAddItems} class=" sm:grid grid-cols-8 gap-2 ">
                     <input type="text" id="invoice" name="itemname" class="invoice" placeholder="Item " value={itemName} onChange={(e) => setItemName(e.target.value)} />
                     <input type="text" id="invoice" name="GST" class="invoice" placeholder="%" value={gst} onChange={(e) => setGst(e.target.value)} />
                     <input type="text" id="invoice" name="quantity" class="invoice" placeholder="quantity" value={quantity} onChange={(e) => setQuantity(e.target.value)} />
@@ -91,9 +97,8 @@ const InvoiceItems = ({items,setItems,addItems,setAddItems}) => {
                         + Add New Item
                 </button>
                 </additems>
-                
-                
             </main>
+            </div>
             
         </main>
     )

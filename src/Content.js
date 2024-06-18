@@ -30,7 +30,7 @@ const Content = ({to,setTo,date,setDate,image,setImage,from,setFrom,items,setIte
     }
     
     return (
-        <main  className="m-20 p-4 border border-gray-700 rounded-xl">
+        <main  className="m-4 sm:m-20 sm:p-4 border border-gray-700 rounded-xl 2xl:text-2xl">
             <ContentTop date={date} setDate={setDate} image={image} setImage={setImage} qno={qno} title="Quotation"/>
             <Quotation from={from} setFrom={setFrom} to={to} setTo={setTo} titleFrom="Quotation From" titleTo="Quotation To"/>
             <Items items={items} setItems={setItems} addItems={addItems} setAddItems={setAddItems}  />
@@ -39,7 +39,7 @@ const Content = ({to,setTo,date,setDate,image,setImage,from,setFrom,items,setIte
                 {error.toName && <p className="text-red-500">{error.toName}</p>}
                 
             </div>
-            <button onClick={handleContinue} className="m-8 px-4 text-2xl text-white flex float-right border-2 rounded-xl bg-custom-blue">Continue</button>
+            <button onClick={handleContinue} className="m-8 px-4 sm:text-2xl text-white flex float-right border-2 rounded-xl bg-custom-blue">Continue</button>
             
         </main>
     )
