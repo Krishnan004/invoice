@@ -4,13 +4,13 @@ import { FaRegEdit } from "react-icons/fa";
 import { IoShareSocialOutline } from "react-icons/io5";
 import { MdOutlineFileDownload } from "react-icons/md";
 import { useRef } from 'react';
-import ReactToPrint, { useReactToPrint } from 'react-to-print';
+import ReactToPrint from 'react-to-print';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import PrintTotal from './PrintTotal';
 import { IoIosArrowDown } from "react-icons/io";
 import { LiaRupeeSignSolid } from "react-icons/lia";
-import api from "./api/quotationNo";
+// import api from "./api/quotationNo";
 import { LuRedo } from "react-icons/lu";
 import { LuUndo } from "react-icons/lu";
 

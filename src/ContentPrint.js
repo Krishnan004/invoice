@@ -3,12 +3,12 @@ import { TfiPrinter } from "react-icons/tfi";
 import { FaRegEdit } from "react-icons/fa";
 import { IoShareSocialOutline } from "react-icons/io5";
 import { MdOutlineFileDownload } from "react-icons/md";
-import ReactToPrint, { useReactToPrint } from 'react-to-print';
+import ReactToPrint from 'react-to-print';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import SumTotal from './SumTotal';
 import { Link } from 'react-router-dom';
-import api from "./api/quotationNo";
+// import api from "./api/quotationNo";
 import { LuRedo } from "react-icons/lu";
 import { LuUndo } from "react-icons/lu";
 import {
@@ -26,7 +26,6 @@ const ContentPrint = ({ date, image, from, to, items, qno, setQno }) => {
 
     const componentRef = useRef();
     const [share, setShare] = useState(false);
-    const [showDescription, setShowDescription] = useState(false);
     const [descriptionVisible, setDescriptionVisible] = useState({});
     const [activeItemId, setActiveItemId] = useState({});
   
