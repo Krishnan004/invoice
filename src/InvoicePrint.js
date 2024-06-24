@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { TfiPrinter } from "react-icons/tfi";
 import { FaRegEdit } from "react-icons/fa";
-import { IoShareSocialOutline } from "react-icons/io5";
+// import { IoShareSocialOutline } from "react-icons/io5";
 import { MdOutlineFileDownload } from "react-icons/md";
 import { useRef } from 'react';
 import ReactToPrint from 'react-to-print';
@@ -15,11 +15,11 @@ import { LuRedo } from "react-icons/lu";
 import { LuUndo } from "react-icons/lu";
 
 
-import {
-    WhatsappShareButton,
-    WhatsappIcon, EmailShareButton,
-    EmailIcon,
-} from 'next-share'
+// import {
+//     WhatsappShareButton,
+//     WhatsappIcon, EmailShareButton,
+//     EmailIcon,
+// } from 'next-share'
 import { Link } from 'react-router-dom';
 import PrintQuotation from './PrintQuotation';
 import PrintTop from './PrintTop';
@@ -27,7 +27,7 @@ import PrintTop from './PrintTop';
 const InvoicePrint = ({ date, image, from, to, items, qno,setQno,disCount,setDisCount,total,setTotal }) => {
 
     const componentRef = useRef();
-    const [share, setShare] = useState(false);
+    // const [share, setShare] = useState(false);
     const [descriptionVisible, setDescriptionVisible] = useState({});
     const [activeItemId, setActiveItemId] = useState({});
   
@@ -104,7 +104,7 @@ const InvoicePrint = ({ date, image, from, to, items, qno,setQno,disCount,setDis
                 <LuUndo className="sm:text-4xl text-2xl" onClick={handleUndo} />
                 <LuRedo className="sm:text-4xl text-2xl" onClick={handleRedo} />
                 <Link to="/invoice"> <FaRegEdit className="sm:text-4xl text-2xl" /></Link>
-                <IoShareSocialOutline className="sm:text-4xl text-2xl" onClick={() => setShare(!share)} />
+                {/* <IoShareSocialOutline className="sm:text-4xl text-2xl" onClick={() => setShare(!share)} /> */}
 
                 <MdOutlineFileDownload className="sm:text-4xl text-2xl" onClick={handleDownloadPdf} />
                 <ReactToPrint
@@ -116,7 +116,7 @@ const InvoicePrint = ({ date, image, from, to, items, qno,setQno,disCount,setDis
                     content={() =>componentRef.current}
                     />
                 
-                {share && (
+                {/* {share && (
                     <>
                         <WhatsappShareButton
                             url={'https://github.com/next-share'}
@@ -133,7 +133,7 @@ const InvoicePrint = ({ date, image, from, to, items, qno,setQno,disCount,setDis
                             <EmailIcon size={32} round />
                         </EmailShareButton>
                     </>
-                )}
+                )} */}
 
             </div>
             <div  ref={componentRef} className="my-8 sm:m-12 p-6  border border-gray-700 rounded-xl">
