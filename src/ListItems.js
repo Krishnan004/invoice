@@ -28,7 +28,7 @@ const ListItems = ({ items, setItems }) => {
   return (
     <div>
           {items.map((item) => (
-            <div key={item.id} className="text-gray-500 border-b border-gray-400 rounded-xl">
+            <div key={item.id} className="text-gray-500 border-b border-gray-400 rounded-xl ">
               <div className="sm:px-12 grid grid-cols-2 sm:grid sm:grid-cols-5 gap-2 p-2">
               <label className="sm:hidden" >Item:</label><p className="item" name="itemname">{item.item}</p>
                 <label className="sm:hidden" id="quantity">Quantity:</label><p className="item" name="quantity">{item.quantity}</p>

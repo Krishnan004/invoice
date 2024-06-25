@@ -23,6 +23,7 @@ import { LuUndo } from "react-icons/lu";
 import { Link } from 'react-router-dom';
 import PrintQuotation from './PrintQuotation';
 import PrintTop from './PrintTop';
+import axios from "axios";
 
 const InvoicePrint = ({ date, image, from, to, items, qno,setQno,disCount,setDisCount,total,setTotal }) => {
 
@@ -74,28 +75,32 @@ const InvoicePrint = ({ date, image, from, to, items, qno,setQno,disCount,setDis
         }
     };
     
-    
-
-    const handleRedo = async () => {
-        // try {
-            const newQno = Number(qno)+1 ;
-        //     await api.put("/qno",  { no: newQno } );
-            setQno({no:newQno});
-        //     console.log(qno)
-        // } catch (error) {
-        //     console.log(`Error updating quotation number: ${error.message}`);
-        // }
+    const handleUndo = async () => {
+        try {
+            const newQno = qno - 1;
+            await axios.put("http://localhost:5400/quotation", {
+                newQno: newQno,
+                oldQno: qno
+            });
+            setQno(newQno);
+            console.log(newQno);  // Log the new quotation number
+        } catch (error) {
+            console.log(`Error updating quotation number: ${error.message}`);
+        }
     };
 
-    const handleUndo = async () => {
-        // try {
-            const newQno = Number(qno)-1 ;
-        //     await api.put("/qno",  { no: newQno } );
-            setQno({no:newQno});
-        //     console.log(qno)
-        // } catch (error) {
-        //     console.log(`Error updating quotation number: ${error.message}`);
-        // }
+    const handleRedo = async () => {
+        try {
+            const newQno = qno + 1;
+            await axios.put("http://localhost:5400/quotation", {
+                newQno: newQno,
+                oldQno: qno
+            });
+            setQno(newQno);
+            console.log(newQno);  // Log the new quotation number
+        } catch (error) {
+            console.log(`Error updating quotation number: ${error.message}`);
+        }
     };
 
     return (

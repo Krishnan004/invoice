@@ -7,6 +7,7 @@ import ContentPrint from './ContentPrint';
 import Invoice from './Invoice';
 import InvoicePrint from './InvoicePrint';
 import Loading from './Loading';
+import axios from "axios";
 
 function App() {
   const [items, setItems] = useState([]);
@@ -15,7 +16,7 @@ function App() {
   const [to, setTo] = useState({});
   const [image, setImage] = useState(null);
   const [date, setDate] = useState(null);
-  const [qno, setQno] = useState({ no: 1 });
+  const [qno, setQno] = useState(0);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [disCount, setDisCount] = useState(0);
@@ -23,6 +24,18 @@ function App() {
 
   useEffect(() => {
     // Simulate loading
+
+    const fetch=async()=>{
+      try {
+        const num=await axios.get("http://localhost:5400/quotation")
+        const value=(num.data)[0].qno
+        setQno(value)
+        console.log(value)
+      } catch (error) {
+        console.log(error)
+      }
+    }
+    fetch()
     const timer = setTimeout(() => {
       setLoading(false);
     }, 1000);
@@ -69,13 +82,13 @@ function App() {
               date={date}
               to={to}
               setTo={setTo}
-              qno={qno ? qno.no : ''}
+              qno={qno ? qno : ''}
             />
           }
         />
         <Route
           path="/continue"
-          element={<ContentPrint date={date} from={from} to={to} items={items} image={image} qno={qno ? qno.no : ''} setQno={setQno} />}
+          element={<ContentPrint date={date} from={from} to={to} items={items} image={image} qno={qno ? qno : ''} setQno={setQno} />}
         />
         <Route
           path="/invoice"
@@ -97,7 +110,7 @@ function App() {
               setDisCount={setDisCount}
               total={total}
               setTotal={setTotal}
-              qno={qno ? qno.no : ''}
+              qno={qno ? qno : ''}
             />
           }
         />
@@ -110,7 +123,7 @@ function App() {
               to={to}
               items={items}
               image={image}
-              qno={qno ? qno.no : ''}
+              qno={qno ? qno : ''}
               setQno={setQno}
               disCount={disCount}
               setDisCount={setDisCount}

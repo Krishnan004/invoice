@@ -11,7 +11,7 @@ const SumTotal = ({items}) => {
 
     return (
         <div className="mb-2">
-            <label className="  sm:text-2xl text-gray-500 flex justify-end items-center">Total Amount  <span className="mx-8 text-gray-600 font-bold" ><span className="font-sans font-medium">₹ </span>{sumTotal.toFixed(3)}</span></label>
+            <label className=" text-xs sm:text-2xl text-gray-500 flex justify-end items-center">Total Amount  <span className="mx-8 text-gray-600 font-bold" ><span className="font-sans font-medium">₹ </span>{sumTotal.toFixed(2)}</span></label>
         </div>
     )
 }

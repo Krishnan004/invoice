@@ -7,7 +7,7 @@
 @layer components {
   input {
     /* Default styles for all input elements */
-    @apply w-40 sm:w-72 2xl:w-96 sm:mx-2 sm:mx-8 mt-1 border-b border-gray-500 px-2 sm:px-4 py-2 text-custom-blue ;
+    @apply w-40 sm:w-72 2xl:w-96 sm:mx-2 sm:mx-8 mt-1 border-b border-gray-500 px-2 sm:px-4 py-2 text-custom-blue focus:outline-none;
   }
   
   #item {
@@ -27,6 +27,6 @@
 
   .top {
     /* Custom styles for element with class 'top' */
-    @apply w-full w-24 sm:w-52 border-b-2 ;
+    @apply w-full w-24 sm:w-52 border-b-2 2xl:text-xl ;
   }
 }

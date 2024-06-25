@@ -42,7 +42,7 @@ const PrintTotal = ({ items,disCount,total}) => {
                     <label className="text-red-500"><LiaRupeeSignSolid className="inline "/>{disCount.toFixed(2)}</label>
                 )}
                 </div>
-                <div className="border-y border-gray-500 inline p-2 sm:p-4">
+                <div className="mx-16 border-y border-gray-500 inline p-2 sm:p-4">
                 <label className="sm:text-2xl text-gray-500">
                     Total Amount <span className="sm:mx-8 text-gray-600 font-bold"><span className="font-sans font-medium">₹</span>{total}</span>
                 </label>

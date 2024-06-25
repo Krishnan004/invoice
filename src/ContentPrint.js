@@ -21,6 +21,7 @@ import { IoIosArrowDown } from "react-icons/io";
 import PrintQuotation from './PrintQuotation';
 import PrintTop from './PrintTop';
 import { LiaRupeeSignSolid } from "react-icons/lia";
+import axios from "axios";
 
 const ContentPrint = ({ date, image, from, to, items, qno, setQno }) => {
 
@@ -41,25 +42,32 @@ const ContentPrint = ({ date, image, from, to, items, qno, setQno }) => {
     };
 
     const handleRedo = async () => {
-        // try {
-        const newQno = Number(qno) + 1;
-        //     await api.put("/qno",  { no: newQno } );
-        setQno({ no: newQno });
-        //     console.log(qno)
-        // } catch (error) {
-        //     console.log(`Error updating quotation number: ${error.message}`);
-        // }
+        try {
+            const newQno = qno + 1;
+            await axios.put("http://localhost:5400/quotation", {
+                newQno: newQno,
+                oldQno: qno
+            });
+            setQno(newQno);
+            console.log(newQno);  // Log the new quotation number
+        } catch (error) {
+            console.log(`Error updating quotation number: ${error.message}`);
+        }
     };
+    
 
     const handleUndo = async () => {
-        // try {
-        const newQno = Number(qno) - 1;
-        //     await api.put("/qno",  { no: newQno } );
-        setQno({ no: newQno });
-        //     console.log(qno)
-        // } catch (error) {
-        //     console.log(`Error updating quotation number: ${error.message}`);
-        // }
+        try {
+            const newQno = qno - 1;
+            await axios.put("http://localhost:5400/quotation", {
+                newQno: newQno,
+                oldQno: qno
+            });
+            setQno(newQno);
+            console.log(newQno);  // Log the new quotation number
+        } catch (error) {
+            console.log(`Error updating quotation number: ${error.message}`);
+        }
     };
     const pdf = new jsPDF('p', 'mm', 'a4');
     const handleDownloadPdf = () => {

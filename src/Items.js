@@ -6,7 +6,7 @@ const Items = ({items,setItems,addItems,setAddItems}) => {
 
      
     return (
-            <main className="m-8 border rounded-2xl border-gray-400">
+            <main className="p-6 m-8 border rounded-2xl border-gray-400">
             <div className="m-2 border rounded-2xl border-gray-400">
                         <ItemHeader/>
                         <ListItems items={items} setItems={setItems} />

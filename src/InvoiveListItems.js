@@ -27,7 +27,7 @@ const InvoiveListItems = ({items,setItems}) => {
     return (
         <div>
       {items.map((item, index) => (
-        <div className="text-gray-500 bottom-b border-gray-300 " >
+        <div className="text-gray-500 border-b border-gray-300 rounded-xl " >
         <div key={index} className="sm:pl-12 sm:text-center sm:grid sm:grid-cols-8 grid grid-cols-2 gap-2 p-2  sm:text-sm 2xl:text-xl">
         <label className="sm:hidden" >Item:</label><label className="invoice" name="itemname" >{item.item}</label>
         <label className="sm:hidden" >GST:</label><label className="invoice" name="gst">{item.gst}</label>

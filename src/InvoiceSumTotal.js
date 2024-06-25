@@ -48,7 +48,7 @@ const InvoiceSumTotal = ({ items,disCount,setDisCount,total,setTotal}) => {
 
     return (
         <div className="m-2 sm:m-8  grid justify-items-end gap-2 text-gray-500 sm:text-lg">
-            <div className="m-2 mr-4 sm:mx-12 grid grid-cols-2 gap-2 justify-items-end   sm:w-80">
+            <div className="m-2 mr-4  grid grid-cols-2 gap-2    sm:w-80">
                 <label >
                     Amount: 
                 </label>
@@ -62,21 +62,21 @@ const InvoiceSumTotal = ({ items,disCount,setDisCount,total,setTotal}) => {
                 </label>
                 <label ><LiaRupeeSignSolid className="inline"/>{tax.toFixed(2)}</label>
                 </div>
-                <div className="">
+                <div className="mx-8">
                 {disCount > 0 && (
-                    <div className="mx-8 grid grid-cols-2  justify-items-end">
-                    <label className="mx-8">
+                    <div className=" grid grid-cols-2 gap-2">
+                    <label className="">
                         Discount: 
                     </label>
                     <label className=""><LiaRupeeSignSolid className="inline  "/>{disCount.toFixed(2)}<RxCross2 className="inline" onClick={handleDiscountCancel} /></label>
                     </div>
                 )}
-                {!disVisibility ? (
-                    <div className="mr-20">
-                    <button className="" onClick={handleDiscountVisibility}>+ Give discount on total</button>
+                {/* {!disVisibility ? (
+                    <div className="">
+                    <button className="" onClick={handleDiscountVisibility}>+discount</button>
                     </div>
-                ) : (
-                    <div>
+                ) : ( */}
+                    <div className="grid grid-cols-2 gap-2">
                         <label htmlFor="reduction">Reduction: </label>
                         <input
                             type="text"
@@ -86,14 +86,13 @@ const InvoiceSumTotal = ({ items,disCount,setDisCount,total,setTotal}) => {
                             placeholder="%"
                             onBlur={(e) => applyDiscount(e.target.value)}
                         />
-                        <RxCross2 className="inline" onClick={handleDiscountVisibility} />
                     </div>
-                )}
+                {/* )} */}
                 <label className="block" onClick={handleRoundOff}>Round Off</label>
             </div>
-            <div className="border-y border-gray-500 inline p-4">
+            <div className="sm:mx-16 border-y border-gray-500 inline p-4">
                 <label className="sm:text-2xl text-gray-500">
-                    Total Amount <span className="mx-8 text-gray-600 font-bold"><LiaRupeeSignSolid className="inline"/>{total}</span>
+                    Total Amount <span className="sm:mx-8 text-gray-600 font-bold"><LiaRupeeSignSolid className="inline"/>{total}</span>
                 </label>
             </div>
         </div>

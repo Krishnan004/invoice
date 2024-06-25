@@ -1,78 +1,113 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react';
 import SumTotal from './SumTotal';
 
-const ItemContent = ({items,setItems}) => {
-    
+const ItemContent = ({ items, setItems }) => {
     const [showTextarea, setShowTextarea] = useState(false);
-    const [itemName, setItemName] = useState()
-    const [quantity, setQuantity] = useState(0)
-    const [rate, setRate] = useState(0)
-    const [total,setTotal]=useState()
-    const [description,setDescription]=useState()
+    const [itemName, setItemName] = useState('');
+    const [quantity, setQuantity] = useState(0);
+    const [rate, setRate] = useState(0);
+    const [description, setDescription] = useState('');
 
-        const handleButtonClick = () => {
-          setShowTextarea(!showTextarea);
-        };
-         
-        
+    const handleButtonClick = () => {
+        setShowTextarea(!showTextarea);
+    };
 
-        const handleAddItems=()=>{
-            const id = items.length ? items[items.length - 1].id + 1 : 1;
-            const total=quantity*rate;
-            const listItems={id,item:itemName,quantity:quantity,rate:rate,total,description:description}
-            const updatedItems=[...items,listItems]
-            setItems(updatedItems);
-            setItemName('')
-            setRate('')
-            setQuantity('')
-            setTotal('')
-            setDescription('')
-        }
-        
-        
-       
+    const handleAddItems = () => {
+        const id = items.length ? items[items.length - 1].id + 1 : 1;
+        const total = quantity * rate;
+        const listItems = { id, item: itemName, quantity, rate, total, description };
+        const updatedItems = [...items, listItems];
+        setItems(updatedItems);
+        setItemName('');
+        setRate(0);
+        setQuantity(0);
+        setDescription('');
+    };
+
+    const handleChange = (index, e) => {
+        const { name, value } = e.target;
+        setItems(prevItems => {
+            const updatedItems = [...prevItems];
+            updatedItems[index] = { ...updatedItems[index], [name]: value };
+            if (name === 'quantity' || name === 'rate') {
+                updatedItems[index].total = updatedItems[index].quantity * updatedItems[index].rate;
+            }
+            return updatedItems;
+        });
+    };
+
     return (
-
-        <main >
-            <div onSubmit={handleAddItems} className=" sm:grid sm:grid-cols-5 gap-2">
-                <input type="text" id="item" name="itemname"  placeholder="Item name" value={itemName} onChange={(e)=>setItemName(e.target.value)}/>
-                <input type="text" id="item" name="quantity"  placeholder="Quantity" value={quantity} onChange={(e)=>setQuantity(e.target.value)}/>
-                <input type="text" id="item" name="rate"  placeholder="₹00.00" value={rate} onChange={(e)=>setRate(e.target.value)}/>
-                 <input type="text" id="item" name="amount" placeholder="₹00.00"
-                    readOnly
-                    value={quantity * rate}/>
-                    <input type="text" id="item" name="amount" placeholder="₹00.00"
-                    readOnly
-                    value={quantity * rate}/>
-                
-            </div>
+        <main>
+            <form onSubmit={handleAddItems} className="">
+                {items.map((item, index) => (
+                    <div key={index} className="sm:grid sm:grid-cols-5 gap-2">
+                        <input
+                            type="text"
+                            name="item"
+                            id="item"
+                            placeholder="Item name"
+                            value={item.item}
+                            onChange={e => handleChange(index, e)}
+                        />
+                        <input
+                            type="number"
+                            name="quantity"
+                            id="item"
+                            placeholder="Quantity"
+                            value={item.quantity}
+                            onChange={e => handleChange(index, e)}
+                        />
+                        <input
+                            type="number"
+                            name="rate"
+                            id="item"
+                            placeholder="₹00.00"
+                            value={item.rate}
+                            onChange={e => handleChange(index, e)}
+                        />
+                        <input
+                            type="text"
+                            name="amount"
+                            id="item"
+                            placeholder="₹00.00"
+                            readOnly
+                            value={item.quantity * item.rate}
+                        />
+                        <input
+                            type="text"
+                            name="total"
+                            id="item"
+                            placeholder="₹00.00"
+                            readOnly
+                            value={item.total}
+                        />
+                    </div>
+                ))}
+                <button type="button" onClick={handleAddItems}
+                className="px-4 py-2 border-gray-300 text-gray-600 rounded"
+                >
+                    + Add
+                </button>
+            </form>
             <div className="border-b border-gray-300">
-            <button 
-                    onClick={handleButtonClick} 
+                <button
+                    onClick={handleButtonClick}
                     className="px-4 py-2 border-gray-300 text-gray-600 rounded"
                 >
                     + Description
                 </button>
                 {showTextarea && (
-                    <textarea 
-                    className="mt-4 p-2 border border-gray-300 w-full"
-                    placeholder="Description"
-                    value={description}
-                    onChange={(e)=>setDescription(e.target.value)}
+                    <textarea
+                        className="mt-4 p-2 border border-gray-300 w-full"
+                        placeholder="Description"
+                        value={description}
+                        onChange={(e) => setDescription(e.target.value)}
                     ></textarea>
                 )}
-                </div>
-                <div>
-                <button 
-                    className="px-4 py-2 border-gray-300 text-gray-600 rounded"
-                    onClick={()=>handleAddItems()}
-                >
-                    + Add 
-                </button>
-                </div> 
-                <SumTotal items={items} />
+            </div>
+            <SumTotal items={items} />
         </main>
-    )
-}
+    );
+};
 
-export default ItemContent
+export default ItemContent;

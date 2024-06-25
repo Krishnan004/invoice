@@ -24,7 +24,7 @@ const ContentTop = ({ date, setDate, image, setImage,title,qno }) => {
     return (
         <div className="m-2  sm:p-8 text-xs sm:text-xl 2xl:text-2xl ">
 
-            <h3 className="m-2 sm:p-8 text-custom-blue  font-bold text-center block">{title}</h3>
+            <h3 className="m-2 sm:p-8 text-custom-blue  font-bold text-center block 2xl:text-3xl">{title}</h3>
             <div
                 className="m-4 cursor-pointer border border-dashed rounded-lg border-gray-700 w-20 h-20 sm:hidden"
                 onClick={triggerFileUpload}
@@ -46,7 +46,7 @@ const ContentTop = ({ date, setDate, image, setImage,title,qno }) => {
             <div className="m-6 relative">
                 <label htmlFor="quotation_no" className=" inline block text-left font-medium text-custom-blue  mt-4 mr-2">Quotation No : </label>
                 {qno &&(
-                 <label>{`SPI${qno.toString().padStart(3, '0')}`}</label>
+                 <label className="2xl:text-xl">{`SPI${qno.toString().padStart(3, '0')}`}</label>
                  )}
                 <br />
                 <label htmlFor="quotation_date" className="inline block text-left mt-4 font-medium text-custom-blue ">Quotation Date :</label>
@@ -79,8 +79,8 @@ const ContentTop = ({ date, setDate, image, setImage,title,qno }) => {
                    </button>
                  </div>
                 ) : (
-                    <div >
-                     <CiImageOn className="mx-16"/>
+                    <div className="p-2">
+                     <CiImageOn className="mx-auto"/>
                         <span>Upload business logo</span>
                         </div>
                     )}
