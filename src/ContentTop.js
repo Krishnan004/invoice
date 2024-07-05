@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { CiEdit } from "react-icons/ci";
 import { CiImageOn } from "react-icons/ci";
 
-const ContentTop = ({ date, setDate, image, setImage,title,qno }) => {
+const ContentTop = ({ date, setDate, image, setImage,title,qno,Date,no }) => {
 
 
 
@@ -44,12 +44,12 @@ const ContentTop = ({ date, setDate, image, setImage,title,qno }) => {
                     )}
             </div>
             <div className="m-6 relative">
-                <label htmlFor="quotation_no" className=" inline block text-left font-medium text-custom-blue  mt-4 mr-2">Quotation No : </label>
+                <label htmlFor="quotation_no" className=" inline block text-left font-medium text-custom-blue  mt-4 mr-2">{no} : </label>
                 {qno &&(
                  <label className="2xl:text-xl">{`SPI${qno.toString().padStart(3, '0')}`}</label>
                  )}
                 <br />
-                <label htmlFor="quotation_date" className="inline block text-left mt-4 font-medium text-custom-blue ">Quotation Date :</label>
+                <label htmlFor="quotation_date" className="inline block text-left mt-4 font-medium text-custom-blue ">{Date} :</label>
                 <input
                     type="date"
                     id="quotation_date"

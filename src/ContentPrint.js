@@ -138,7 +138,7 @@ const ContentPrint = ({ date, image, from, to, items, qno, setQno }) => {
             </div>
             <div ref={componentRef}>
                 <div className="my-8 sm:m-12 p-2 sm:p-6 border border-gray-500 rounded-xl text-gray-500 ">
-                    <PrintTop image={image} qno={qno} date={date} title={"Quotation"} />
+                    <PrintTop image={image} qno={qno} date={date} title={"Quotation"} no="Quotation No " Date="Quotation Date " />
                     <PrintQuotation from={from} to={to} TitleFrom="Quotation From" TitleTo="Quotation To" />
                     <div className="border border-gray-500 rounded-xl sm:mx-4">
                         <header className="p-2 pl-4 bg-gray-600 grid grid-cols-5 list-none text-white rounded-t-xl text-sm sm:text-xl">

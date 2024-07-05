@@ -32,7 +32,7 @@ const Invoice = ({to,setTo,date,setDate,image,setImage,from,setFrom,items,setIte
     
     return (
         <main   className="m-4  sm:m-20 sm:p-4 border border-gray-700 rounded-xl">
-            <ContentTop date={date} setDate={setDate} image={image} setImage={setImage}  title="Invoice" qno={qno} />
+            <ContentTop date={date} setDate={setDate} image={image} setImage={setImage}  title="Invoice" qno={qno} no="Invoice No " Date="Invoice Date " />
             <Quotation from={from} setFrom={setFrom} to={to} setTo={setTo} titleFrom="Billed From" titleTo="Billed To"/>
             <InvoiceItems items={items} setItems={setItems} addItems={addItems} setAddItems={setAddItems} />
             <InvoiceSumTotal items={items} disCount={disCount} setDisCount={setDisCount} total={total}
