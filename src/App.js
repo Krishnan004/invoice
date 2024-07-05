@@ -16,6 +16,7 @@ function App() {
   const [to, setTo] = useState({});
   const [image, setImage] = useState(null);
   const [date, setDate] = useState(null);
+  const [q,sq]=useState();
   const [qno, setQno] = useState(0);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -82,13 +83,16 @@ function App() {
               date={date}
               to={to}
               setTo={setTo}
+              q={q}
+              sq={sq}
               qno={qno ? qno : ''}
             />
           }
         />
         <Route
           path="/continue"
-          element={<ContentPrint date={date} from={from} to={to} items={items} image={image} qno={qno ? qno : ''} setQno={setQno} />}
+          element={<ContentPrint date={date} from={from} to={to} items={items} image={image} qno={qno ? qno : ''} setQno={setQno} q={q}
+          sq={sq} />}
         />
         <Route
           path="/invoice"
@@ -111,6 +115,8 @@ function App() {
               total={total}
               setTotal={setTotal}
               qno={qno ? qno : ''}
+              q={q}
+              sq={sq}
             />
           }
         />
@@ -129,6 +135,8 @@ function App() {
               setDisCount={setDisCount}
               total={total}
               setTotal={setTotal}
+              q={q}
+              sq={sq}
             />
           }
         />

@@ -1,6 +1,6 @@
 import React from 'react'
 
-const PrintTop = ({qno,date,image,title,no,Date}) => {
+const PrintTop = ({qno,date,image,title,no,Date,q,sq}) => {
     return (
         <div>
             <h3 className="text-center sm:p-8 text-gray-600 sm:text-2xl  font-bold ">{title}</h3>
@@ -10,7 +10,7 @@ const PrintTop = ({qno,date,image,title,no,Date}) => {
                     </image>
                     )}
                     <label htmlFor="quotation_no" className=" text-gray-600 inline block text-left font-medium mt-4">{no} : </label>
-                    <label>{`SPI${qno.toString().padStart(3, '0')}`}</label>
+                    <label>{`SPI${q.toString().padStart(3, '0')}`}</label>
                     <br />
                     <label htmlFor="quotation_date" className="text-gray-600 inline block text-left font-medium mt-4">{Date} : </label>
                     <label htmlFor="quotation_date" className="">{date}</label>

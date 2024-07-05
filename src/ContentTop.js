@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { CiEdit } from "react-icons/ci";
 import { CiImageOn } from "react-icons/ci";
 
-const ContentTop = ({ date, setDate, image, setImage,title,qno,Date,no }) => {
+const ContentTop = ({ date, setDate, image, setImage,title,qno,Date,no,q,sq}) => {
 
 
 
@@ -48,6 +48,11 @@ const ContentTop = ({ date, setDate, image, setImage,title,qno,Date,no }) => {
                 {qno &&(
                  <label className="2xl:text-xl">{`SPI${qno.toString().padStart(3, '0')}`}</label>
                  )}
+                 <input type="text" 
+                    className="top"
+                    value={q}
+                    onChange={(e) => sq(e.target.value)}
+                 />
                 <br />
                 <label htmlFor="quotation_date" className="inline block text-left mt-4 font-medium text-custom-blue ">{Date} :</label>
                 <input

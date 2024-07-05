@@ -5,7 +5,7 @@ import Items from './Items';
 import {  useNavigate } from 'react-router-dom';
 
 
-const Content = ({to,setTo,date,setDate,image,setImage,from,setFrom,items,setItems,addItems,setAddItems,qno}) => {
+const Content = ({to,setTo,date,setDate,image,setImage,from,setFrom,items,setItems,addItems,setAddItems,qno,q,sq}) => {
     const [error,setError]=useState({});
     
 
@@ -31,7 +31,8 @@ const Content = ({to,setTo,date,setDate,image,setImage,from,setFrom,items,setIte
     
     return (
         <main  className="m-4 sm:m-20 sm:p-4 border border-gray-700 rounded-xl ">
-            <ContentTop date={date} setDate={setDate} image={image} setImage={setImage} qno={qno} title="Quotation" no="Quotation No " Date="Quotation Date "/>
+            <ContentTop date={date} setDate={setDate} image={image} setImage={setImage} qno={qno} title="Quotation" no="Quotation No " Date="Quotation Date " q={q}
+              sq={sq} />
             <Quotation from={from} setFrom={setFrom} to={to} setTo={setTo} titleFrom="Quotation From" titleTo="Quotation To"/>
             <Items items={items} setItems={setItems} addItems={addItems} setAddItems={setAddItems}  />
             <div className="text-center">

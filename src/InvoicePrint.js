@@ -25,7 +25,7 @@ import PrintQuotation from './PrintQuotation';
 import PrintTop from './PrintTop';
 import axios from "axios";
 
-const InvoicePrint = ({ date, image, from, to, items, qno,setQno,disCount,setDisCount,total,setTotal }) => {
+const InvoicePrint = ({ date, image, from, to, items, qno,setQno,disCount,setDisCount,total,setTotal,q,sq }) => {
 
     const componentRef = useRef();
     // const [share, setShare] = useState(false);
@@ -142,7 +142,7 @@ const InvoicePrint = ({ date, image, from, to, items, qno,setQno,disCount,setDis
 
             </div>
             <div  ref={componentRef} className="my-8 sm:m-12 p-6  border border-gray-700 rounded-xl">
-                <PrintTop image={image} qno={qno} date={date} title="Invoice" no="Invoice No " Date="Invoice Date " />
+                <PrintTop image={image} qno={qno} date={date} title="Invoice" no="Invoice No " Date="Invoice Date " q={q} sq={sq} />
                 <PrintQuotation from={from} to={to} TitleFrom="Billed From" TitleTo="Billed To" />
                 <div className=" sm:mx-4 border rounded-2xl border-gray-700">
                 <header className="pl-2 bg-custom-blue grid grid-cols-8 list-none text-white rounded-t-2xl text-center text-xl py-6">
